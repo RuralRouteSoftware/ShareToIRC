@@ -29,6 +29,14 @@
       <artifactId>actionbarsherlock</artifactId>
       <type>apklib</type>
     </dependency>
+    <dependency>
+        <groupId>com.googlecode.androidannotations</groupId>
+        <artifactId>androidannotations</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>com.googlecode.androidannotations</groupId>
+        <artifactId>androidannotations-api</artifactId>
+      </dependency>
   </dependencies>
 
   <build>
