@@ -8,6 +8,7 @@
 
   <instrumentation android:targetPackage="com.rrs_apps.android.share_to_irc"
     android:name="android.test.InstrumentationTestRunner" />
+  <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16"/>
 
 </manifest>
 

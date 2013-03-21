@@ -47,6 +47,13 @@
         <version>4.10</version>
         <scope>provided</scope>
       </dependency>
+
+      <dependency>
+        <groupId>com.actionbarsherlock</groupId>
+        <artifactId>actionbarsherlock</artifactId>
+        <version>4.2.0</version>
+        <type>apklib</type>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
