@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/server_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/server_name"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/host_address"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/host_address"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/host_port"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/host_port"
+        android:inputType="number"
+        android:maxLength="5" />
+
+    <CheckBox
+        android:id="@+id/uses_ssl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ssl" />
+
+    <EditText
+        android:id="@+id/nick"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/nick"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/save"
+        android:text="@string/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
