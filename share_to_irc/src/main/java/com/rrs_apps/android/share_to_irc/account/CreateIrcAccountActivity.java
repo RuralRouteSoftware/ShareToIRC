@@ -40,6 +40,7 @@ public class CreateIrcAccountActivity extends SherlockAccountAuthenticatorActivi
         result.putString(IrcAccountHandler.ACCOUNT_KEY_HOST_PORT, editFragment.getHostPort());
         result.putString(IrcAccountHandler.ACCOUNT_KEY_IS_SSL, editFragment.usesSsl() ? "true" : "false");
         result.putString(IrcAccountHandler.ACCOUNT_KEY_NICK, editFragment.getNick());
+        result.putString(IrcAccountHandler.ACCOUNT_KEY_SERVER_PASSWORD, editFragment.getServerPassword());
 
         // Create new account
         Bundle userdata = new Bundle(result);

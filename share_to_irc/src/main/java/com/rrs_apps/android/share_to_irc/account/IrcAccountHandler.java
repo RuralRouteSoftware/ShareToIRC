@@ -27,6 +27,7 @@ public class IrcAccountHandler extends AbstractAccountAuthenticator {
     public static final String ACCOUNT_KEY_HOST_PORT = "host_port";
     public static final String ACCOUNT_KEY_IS_SSL = "is_ssl";
     public static final String ACCOUNT_KEY_NICK = "nick";
+    public static final String ACCOUNT_KEY_SERVER_PASSWORD = "server_password";
 
     private Context mContext;
 

@@ -25,6 +25,13 @@
         android:hint="@string/host_port"
         android:inputType="number"
         android:maxLength="5" />
+    
+    <EditText
+        android:id="@+id/server_password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/server_password"
+        android:inputType="textPassword" />
 
     <CheckBox
         android:id="@+id/uses_ssl"
