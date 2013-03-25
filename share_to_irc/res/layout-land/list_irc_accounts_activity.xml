@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <fragment
+        android:id="@+id/irc_account_list_fragment"
+        android:name="com.rrs_apps.android.share_to_irc.account.IrcAccountListFragment_"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <fragment
+            android:id="@+id/irc_account_editor_fragment"
+            android:name="com.rrs_apps.android.share_to_irc.account.IrcAccountEditorFragment_"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/no_account_selected"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/select_account_to_edit"
+            android:textIsSelectable="false"
+            android:textSize="20sp" />
+    </FrameLayout>
+
+</LinearLayout>
