@@ -12,6 +12,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.FragmentById;
+import com.googlecode.androidannotations.annotations.OnActivityResult;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.rrs_apps.android.share_to_irc.R;
 import com.rrs_apps.android.share_to_irc.account.IrcAccountListFragment.Listener;
@@ -22,6 +23,8 @@ import com.rrs_apps.android.share_to_irc.account.IrcAccountListFragment.Listener
 @EActivity(R.layout.list_irc_accounts_activity)
 public class ListIrcAccountsActivity extends SherlockFragmentActivity implements Listener,
         com.rrs_apps.android.share_to_irc.account.IrcAccountEditorFragment.Listener {
+    private static final int REQ_CODE_CREATE_ACCOUNT = 0;
+
     @FragmentById(R.id.irc_account_list_fragment)
     IrcAccountListFragment listFragment;
 
@@ -40,7 +43,15 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
                 IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC);
 
         if (accounts.length == 0) {
-            startActivity(new Intent(this, CreateIrcAccountActivity_.class));
+            startActivityForResult(new Intent(this, CreateIrcAccountActivity_.class), REQ_CODE_CREATE_ACCOUNT);
+        }
+    }
+
+    @OnActivityResult(REQ_CODE_CREATE_ACCOUNT)
+    void finishIfNoAccounts(Intent data) {
+        if (data == null) {
+            // Account creator was launched, but the user canceled
+            finish();
         }
     }
 
