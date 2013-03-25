@@ -17,6 +17,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity android:name=".account.CreateIrcAccountActivity_" />
+        <activity android:name=".account.EditIrcAccountActivity_" />
         <activity android:name=".account.ListIrcAccountsActivity_" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

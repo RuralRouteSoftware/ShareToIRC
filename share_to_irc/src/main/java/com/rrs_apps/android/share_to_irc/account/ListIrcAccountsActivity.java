@@ -61,7 +61,7 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
     @Override
     public void accountClicked(Account acct) {
         // Let user edit the account
-        if (editFragment != null) {
+        if (editFragment != null && editFragment.isInLayout()) {
             editFragment.loadAccount(acct);
 
             // Show the editor
@@ -74,7 +74,9 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
             }
         }
         else {
-            // TODO Launch separate editor activity
+            // Launch separate editor activity
+            startActivity(new Intent(this, EditIrcAccountActivity_.class).putExtra(
+                    IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC, acct));
         }
     }
 

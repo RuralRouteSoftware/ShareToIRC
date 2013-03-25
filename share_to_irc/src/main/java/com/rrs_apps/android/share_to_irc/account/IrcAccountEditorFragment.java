@@ -18,7 +18,7 @@ import com.rrs_apps.android.share_to_irc.R;
 @EFragment(R.layout.irc_account_editor_fragment)
 public class IrcAccountEditorFragment extends SherlockFragment {
     public interface Listener {
-        void onSave(IrcAccountEditorFragment editIrcAccountFragment);
+        void onSave(IrcAccountEditorFragment fragment);
     }
 
     Listener listener;
