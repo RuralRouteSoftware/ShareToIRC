@@ -74,6 +74,9 @@ public class ShareTextActivity extends SherlockFragmentActivity {
 
             sendTextToServer(text, address, port, nick, useSsl, password, channels);
         }
+        else {
+            finish();
+        }
     }
 
     @Background
