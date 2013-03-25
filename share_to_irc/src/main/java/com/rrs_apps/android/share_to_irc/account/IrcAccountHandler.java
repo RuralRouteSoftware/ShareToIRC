@@ -104,13 +104,16 @@ public class IrcAccountHandler extends AbstractAccountAuthenticator {
      *            This request code will be passed to onActivityResult.
      * @param selectedAccount
      *            If not null, this Account will be rendered as currently selected in the picker.
+     * @param alwaysShow
+     *            If true, the picker will always be shown, even if there is only one account that matches the given
+     *            types.
      * @param types
      *            One or more account types. Only these types will be displayed in the picker.
      */
     public static void launchAccountPicker(Activity ctx, int requestCode, Account selectedAccount,
-            String... types) {
-        Intent intent = AccountPicker.newChooseAccountIntent(selectedAccount, null, types, true, null, null,
-                null, null);
+            boolean alwaysShow, String... types) {
+        Intent intent = AccountPicker.newChooseAccountIntent(selectedAccount, null, types, alwaysShow, null,
+                null, null, null);
 
         if (ctx.getPackageManager().resolveActivity(intent, 0) == null) {
             // User probably needs the Google Play Services library

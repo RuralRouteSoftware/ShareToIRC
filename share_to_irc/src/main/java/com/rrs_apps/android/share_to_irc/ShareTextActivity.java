@@ -45,7 +45,7 @@ public class ShareTextActivity extends SherlockFragmentActivity {
             }
 
             // Determine destination account
-            IrcAccountHandler.launchAccountPicker(this, REQ_CODE_PICK_ACCOUNT, null,
+            IrcAccountHandler.launchAccountPicker(this, REQ_CODE_PICK_ACCOUNT, null, false,
                     new String[] { IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC });
         }
     }
