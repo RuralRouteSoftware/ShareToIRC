@@ -85,6 +85,11 @@ public class IrcAccountEditorFragment extends SherlockFragment {
      *            Data is loaded from this account
      */
     public void loadAccount(Account acct) {
+        if (serverName == null) {
+            // Views haven't been injected; loadAccount was probably called at the wrong time
+            return;
+        }
+
         serverName.setText(mAccountManager.getUserData(acct, IrcAccountHandler.ACCOUNT_KEY_SERVER_NAME));
         hostAddress.setText(mAccountManager.getUserData(acct, IrcAccountHandler.ACCOUNT_KEY_HOST_ADDRESS));
         hostPort.setText(mAccountManager.getUserData(acct, IrcAccountHandler.ACCOUNT_KEY_HOST_PORT));
