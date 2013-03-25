@@ -33,14 +33,14 @@ public class ShareTextActivity extends SherlockFragmentActivity {
 
     @AfterViews
     void onLoad() {
-        if (text.isEmpty()) {
+        if (text == null || text.isEmpty()) {
             Toast.makeText(this, R.string.no_text_to_share, Toast.LENGTH_LONG).show();
 
             finish();
         }
         else {
             // Prepend subject if it was supplied
-            if (!subject.isEmpty()) {
+            if (subject != null && !subject.isEmpty()) {
                 text = subject + ": " + text;
             }
 
