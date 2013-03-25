@@ -8,6 +8,7 @@
     <string name="ssl">SSL</string>
     <string name="nick">Nick</string>
     <string name="server_password">Server Password</string>
+    <string name="channel_list">Channels (e.g. \'#chan1 #chan2\')</string>
     <string name="save">Save</string>
     <string name="google_play_services_error">Please install the Google Play Services package</string>
     <string name="select_account_to_edit">Select an account to edit its details</string>

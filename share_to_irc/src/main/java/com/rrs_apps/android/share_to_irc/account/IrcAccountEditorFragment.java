@@ -41,6 +41,9 @@ public class IrcAccountEditorFragment extends SherlockFragment {
     @ViewById
     EditText serverPassword;
 
+    @ViewById
+    EditText channelList;
+
     private AccountManager mAccountManager;
 
     @Click(R.id.save)
@@ -85,6 +88,10 @@ public class IrcAccountEditorFragment extends SherlockFragment {
         return serverPassword.getText().toString();
     }
 
+    public String getChannelList() {
+        return channelList.getText().toString();
+    }
+
     /**
      * Fills all editor fields with an account's data
      * 
@@ -105,6 +112,7 @@ public class IrcAccountEditorFragment extends SherlockFragment {
                 IrcAccountHandler.ACCOUNT_KEY_IS_SSL)));
         serverPassword.setText(mAccountManager.getUserData(acct,
                 IrcAccountHandler.ACCOUNT_KEY_SERVER_PASSWORD));
+        channelList.setText(mAccountManager.getUserData(acct, IrcAccountHandler.ACCOUNT_KEY_CHANNEL_LIST));
     }
 
     /**
@@ -125,5 +133,7 @@ public class IrcAccountEditorFragment extends SherlockFragment {
                 : "false");
         mAccountManager.setUserData(acct, IrcAccountHandler.ACCOUNT_KEY_SERVER_PASSWORD, serverPassword
                 .getText().toString());
+        mAccountManager.setUserData(acct, IrcAccountHandler.ACCOUNT_KEY_CHANNEL_LIST, channelList.getText()
+                .toString());
     }
 }

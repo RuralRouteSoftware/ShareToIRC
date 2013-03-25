@@ -25,7 +25,7 @@
         android:hint="@string/host_port"
         android:inputType="number"
         android:maxLength="5" />
-    
+
     <EditText
         android:id="@+id/server_password"
         android:layout_width="fill_parent"
@@ -46,10 +46,17 @@
         android:hint="@string/nick"
         android:inputType="textEmailAddress" />
 
+    <EditText
+        android:id="@+id/channel_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/channel_list"
+        android:inputType="textEmailAddress" />
+
     <Button
         android:id="@+id/save"
-        android:text="@string/save"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/save" />
 
 </LinearLayout>

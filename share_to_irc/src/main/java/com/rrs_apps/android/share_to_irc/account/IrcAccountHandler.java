@@ -28,6 +28,7 @@ public class IrcAccountHandler extends AbstractAccountAuthenticator {
     public static final String ACCOUNT_KEY_IS_SSL = "is_ssl";
     public static final String ACCOUNT_KEY_NICK = "nick";
     public static final String ACCOUNT_KEY_SERVER_PASSWORD = "server_password";
+    public static final String ACCOUNT_KEY_CHANNEL_LIST = "channel_list";
 
     private Context mContext;
 
