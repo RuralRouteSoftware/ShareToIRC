@@ -26,7 +26,7 @@ public class CreateIrcAccountActivity extends SherlockAccountAuthenticatorActivi
 
     @Override
     public void onSave(IrcAccountEditorFragment editIrcAccountFragment) {
-        if (!dataIsValid())
+        if (!editFragment.dataIsValid())
             return;
 
         // Prepare result bundle
@@ -53,10 +53,5 @@ public class CreateIrcAccountActivity extends SherlockAccountAuthenticatorActivi
 
         setAccountAuthenticatorResult(result);
         finish();
-    }
-
-    private boolean dataIsValid() {
-        return !editFragment.getServerName().isEmpty() && !editFragment.getHostAddress().isEmpty()
-                && !editFragment.getHostPort().isEmpty() && !editFragment.getNick().isEmpty();
     }
 }

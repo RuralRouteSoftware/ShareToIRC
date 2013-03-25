@@ -136,4 +136,14 @@ public class IrcAccountEditorFragment extends SherlockFragment {
         mAccountManager.setUserData(acct, IrcAccountHandler.ACCOUNT_KEY_CHANNEL_LIST, channelList.getText()
                 .toString());
     }
+
+    /**
+     * Checks the editor's data against basic account validity conditions
+     * 
+     * @return false if the data is definitely invalid; otherwise true
+     */
+    public boolean dataIsValid() {
+        return !getServerName().isEmpty() && !getHostAddress().isEmpty() && !getHostPort().isEmpty()
+                && !getNick().isEmpty() && getChannelList().contains("#");
+    }
 }
