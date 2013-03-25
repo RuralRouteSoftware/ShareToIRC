@@ -6,6 +6,7 @@ import org.schwering.irc.lib.IRCModeParser;
 import org.schwering.irc.lib.IRCUser;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 /**
  * This IRCEventListener sends shared text to all configured IRC channels, then disconnects and finishes the activity.
@@ -28,6 +29,13 @@ class SendTextAndFinishListener implements IRCEventListener {
 
     @Override
     public void onDisconnected() {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(activity, R.string.share_success, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // Finish the activity
         activity.finish();
     }
