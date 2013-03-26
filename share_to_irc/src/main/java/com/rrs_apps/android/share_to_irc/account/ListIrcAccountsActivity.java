@@ -13,6 +13,8 @@ import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.FragmentById;
 import com.googlecode.androidannotations.annotations.OnActivityResult;
+import com.googlecode.androidannotations.annotations.OptionsItem;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
 import com.googlecode.androidannotations.annotations.ViewById;
 import com.rrs_apps.android.share_to_irc.R;
 import com.rrs_apps.android.share_to_irc.account.IrcAccountListFragment.Listener;
@@ -21,6 +23,7 @@ import com.rrs_apps.android.share_to_irc.account.IrcAccountListFragment.Listener
  * ListIrcAccountsActivity displays a list of Share To IRC accounts and allows the user to edit and add accounts.
  */
 @EActivity(R.layout.list_irc_accounts_activity)
+@OptionsMenu(R.menu.list_irc_accounts_activity_menu)
 public class ListIrcAccountsActivity extends SherlockFragmentActivity implements Listener,
         com.rrs_apps.android.share_to_irc.account.IrcAccountEditorFragment.Listener {
     private static final int REQ_CODE_CREATE_ACCOUNT = 0;
@@ -97,5 +100,10 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
         editFragment.saveAccount(acct);
 
         Toast.makeText(this, R.string.account_updated, Toast.LENGTH_LONG).show();
+    }
+
+    @OptionsItem
+    void addAccount() {
+        startActivity(new Intent(this, CreateIrcAccountActivity_.class));
     }
 }
