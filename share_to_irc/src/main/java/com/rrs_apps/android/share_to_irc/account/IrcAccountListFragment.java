@@ -34,7 +34,6 @@ public class IrcAccountListFragment extends SherlockListFragment {
 
     private ArrayAdapter<Account> mAdapter;
     private Listener listener;
-    private int mSelectedPosition = -1;
 
     @Override
     public void onStart() {
@@ -66,8 +65,6 @@ public class IrcAccountListFragment extends SherlockListFragment {
         if (listener != null) {
             listener.accountClicked((Account) l.getItemAtPosition(position));
         }
-
-        mSelectedPosition = position;
     }
 
     public void setListener(Listener listener) {
@@ -75,6 +72,6 @@ public class IrcAccountListFragment extends SherlockListFragment {
     }
 
     public Account getSelectedAccount() {
-        return mAdapter.getItem(mSelectedPosition);
+        return mAdapter.getItem(getListView().getCheckedItemPosition());
     }
 }
