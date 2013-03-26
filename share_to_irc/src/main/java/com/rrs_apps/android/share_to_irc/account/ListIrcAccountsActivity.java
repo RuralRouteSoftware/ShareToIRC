@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,9 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
 
     @AfterViews
     void onLoad() {
+        // Don't allow selection by default
+        listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
+
         listFragment.setListener(this);
 
         if (editFragment != null) {
@@ -69,6 +73,11 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.hide(editFragment);
             ft.commit();
+
+            if (editFragment.isInLayout()) {
+                // Allow selection on list fragment
+                listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            }
         }
     }
 

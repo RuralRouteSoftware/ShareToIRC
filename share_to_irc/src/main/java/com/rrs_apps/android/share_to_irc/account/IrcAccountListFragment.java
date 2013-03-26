@@ -41,8 +41,6 @@ public class IrcAccountListFragment extends SherlockListFragment {
         super.onStart();
 
         if (mAdapter == null) {
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
             mAdapter = new ArrayAdapter<Account>(getActivity(),
                     android.R.layout.simple_list_item_single_choice);
 
