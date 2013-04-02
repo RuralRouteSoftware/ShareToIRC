@@ -2,8 +2,8 @@ package com.rrs_apps.android.share_to_irc;
 
 import java.io.IOException;
 
-import org.schwering.irc.lib.IRCConnection;
-import org.schwering.irc.lib.ssl.SSLIRCConnection;
+import com.rrs_apps.java.jirclib.IRCConnection;
+import com.rrs_apps.java.jirclib.ssl.SSLIRCConnection;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

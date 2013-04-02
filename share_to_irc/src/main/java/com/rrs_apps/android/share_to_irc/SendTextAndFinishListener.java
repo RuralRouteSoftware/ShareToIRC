@@ -1,9 +1,9 @@
 package com.rrs_apps.android.share_to_irc;
 
-import org.schwering.irc.lib.IRCConnection;
-import org.schwering.irc.lib.IRCEventListener;
-import org.schwering.irc.lib.IRCModeParser;
-import org.schwering.irc.lib.IRCUser;
+import com.rrs_apps.java.jirclib.IRCConnection;
+import com.rrs_apps.java.jirclib.IRCEventListener;
+import com.rrs_apps.java.jirclib.IRCModeParser;
+import com.rrs_apps.java.jirclib.IRCUser;
 
 import android.app.Activity;
 import android.widget.Toast;

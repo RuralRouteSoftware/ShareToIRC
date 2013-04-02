@@ -43,7 +43,7 @@
 			<type>apklib</type>
 		</dependency>
 		<dependency>
-			<groupId>com.rrs_apps.java.jirclib</groupId>
+			<groupId>com.rrs-apps.java.jirclib</groupId>
 			<artifactId>jirclib</artifactId>
 		</dependency>
 	</dependencies>
