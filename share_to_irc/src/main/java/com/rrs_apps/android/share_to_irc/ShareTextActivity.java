@@ -2,21 +2,19 @@ package com.rrs_apps.android.share_to_irc;
 
 import java.io.IOException;
 
-import com.rrs_apps.java.jirclib.IRCConnection;
-import com.rrs_apps.java.jirclib.ssl.SSLIRCConnection;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.Background;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.Extra;
 import com.googlecode.androidannotations.annotations.OnActivityResult;
 import com.rrs_apps.android.share_to_irc.account.IrcAccountHandler;
+import com.rrs_apps.java.jirclib.IRCConnection;
+import com.rrs_apps.java.jirclib.ssl.SSLIRCConnection;
 
 /**
  * ShareTextActivity receives text via an intent and shares it to a selected IRC account.
@@ -31,19 +29,16 @@ public class ShareTextActivity extends SherlockFragmentActivity {
     @Extra(Intent.EXTRA_TEXT)
     String text;
 
-    @AfterViews
-    void onLoad() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         if (text == null || text.isEmpty()) {
             Toast.makeText(this, R.string.no_text_to_share, Toast.LENGTH_LONG).show();
 
             finish();
         }
         else {
-            // Prepend subject if it was supplied
-            if (subject != null && !subject.isEmpty()) {
-                text = subject + ": " + text;
-            }
-
             // Determine destination account
             IrcAccountHandler.launchAccountPicker(this, REQ_CODE_PICK_ACCOUNT, null, false,
                     new String[] { IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC });
@@ -71,6 +66,11 @@ public class ShareTextActivity extends SherlockFragmentActivity {
             String channelList = AccountManager.get(this).getUserData(acct,
                     IrcAccountHandler.ACCOUNT_KEY_CHANNEL_LIST);
             String[] channels = channelList.split(" ");
+
+            // Prepend subject if it was supplied
+            if (subject != null && !subject.isEmpty()) {
+                text = subject + ": " + text;
+            }
 
             sendTextToServer(text, address, port, nick, useSsl, password, channels);
         }
