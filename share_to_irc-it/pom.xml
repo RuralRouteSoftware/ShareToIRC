@@ -4,16 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.rrs_apps.android.share_to_irc</groupId>
-		<artifactId>share_to_irc-parent</artifactId>
+		<groupId>com.rrs-apps.android.share-to-irc</groupId>
+		<artifactId>share-to-irc-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.rrs_apps.android.share_to_irc</groupId>
-	<artifactId>share_to_irc-it</artifactId>
+	<groupId>com.rrs-apps.android.share-to-irc</groupId>
+	<artifactId>share-to-irc-it</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>apk</packaging>
-	<name>share_to_irc-it - Integration tests</name>
+	<name>share-to-irc-it - Integration tests</name>
 
 	<properties>
 		<!-- When not running a release, we are deploying the plain artifact (so 
@@ -28,16 +28,16 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.rrs_apps.android.share_to_irc</groupId>
-			<artifactId>share_to_irc</artifactId>
+			<groupId>com.rrs-apps.android.share-to-irc</groupId>
+			<artifactId>share-to-irc</artifactId>
 			<type>apk</type>
 			<version>1.0-SNAPSHOT</version>
 			<classifier>${zipaligned-classifier}</classifier> <!-- classifier set according to the ran profile -->
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.rrs_apps.android.share_to_irc</groupId>
-			<artifactId>share_to_irc</artifactId>
+			<groupId>com.rrs-apps.android.share-to-irc</groupId>
+			<artifactId>share-to-irc</artifactId>
 			<type>jar</type>
 			<version>1.0-SNAPSHOT</version>
 			<scope>provided</scope>
