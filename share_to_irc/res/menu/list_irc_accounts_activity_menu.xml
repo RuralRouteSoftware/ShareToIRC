@@ -7,5 +7,12 @@
         android:showAsAction="ifRoom"
         android:title="@string/add_account">
     </item>
+    <item
+        android:id="@+id/delete_account"
+        android:enabled="false"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="ifRoom"
+        android:title="@string/delete"
+        android:visible="false"/>
 
 </menu>

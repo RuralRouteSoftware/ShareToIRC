@@ -2,6 +2,8 @@ package com.rrs_apps.android.share_to_irc.account;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.FragmentById;
@@ -70,14 +73,32 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
             editFragment.setListener(this);
 
             // Nothing should be selected at this point; hide the editor
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.hide(editFragment);
-            ft.commit();
+            hideEditor();
 
             if (editFragment.isInLayout()) {
                 // Allow selection on list fragment
                 listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             }
+        }
+    }
+
+    private void showEditor() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.show(editFragment);
+        ft.commit();
+
+        if (noAccountSelectedText != null) {
+            noAccountSelectedText.setVisibility(View.GONE);
+        }
+    }
+
+    private void hideEditor() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.hide(editFragment);
+        ft.commit();
+
+        if (noAccountSelectedText != null) {
+            noAccountSelectedText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -88,13 +109,9 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
             editFragment.loadAccount(acct);
 
             // Show the editor
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.show(editFragment);
-            ft.commit();
+            showEditor();
 
-            if (noAccountSelectedText != null) {
-                noAccountSelectedText.setVisibility(View.GONE);
-            }
+            supportInvalidateOptionsMenu();
         }
         else {
             // Launch separate editor activity
@@ -114,5 +131,38 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
     @OptionsItem
     void addAccount() {
         startActivity(new Intent(this, CreateIrcAccountActivity_.class));
+    }
+
+    @OptionsItem
+    void deleteAccount() {
+        AccountManager.get(this).removeAccount(listFragment.getSelectedAccount(),
+                new AccountManagerCallback<Boolean>() {
+                    @Override
+                    public void run(AccountManagerFuture<Boolean> future) {
+                        // Refresh the account list after the account is deleted
+                        while (!future.isDone() && !future.isCancelled())
+                            ;
+
+                        listFragment.reloadAccounts();
+
+                        // Selected account has been deleted; hide the editor
+                        hideEditor();
+                    }
+                }, null);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Show/hide delete action
+        if (listFragment != null && listFragment.isInLayout() && listFragment.getSelectedAccount() != null) {
+            menu.findItem(R.id.delete_account).setVisible(true);
+            menu.findItem(R.id.delete_account).setEnabled(true);
+        }
+        else {
+            menu.findItem(R.id.delete_account).setVisible(false);
+            menu.findItem(R.id.delete_account).setEnabled(false);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
     }
 }

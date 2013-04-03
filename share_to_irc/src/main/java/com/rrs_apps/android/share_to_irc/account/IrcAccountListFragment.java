@@ -46,10 +46,10 @@ public class IrcAccountListFragment extends SherlockListFragment {
             setListAdapter(mAdapter);
         }
 
-        refreshAccountList();
+        reloadAccounts();
     }
 
-    private void refreshAccountList() {
+    public void reloadAccounts() {
         mAdapter.clear();
 
         Account[] accounts = AccountManager.get(getActivity()).getAccountsByType(
@@ -57,6 +57,16 @@ public class IrcAccountListFragment extends SherlockListFragment {
 
         for (Account acct : accounts) {
             mAdapter.add(new IrcAccount(acct));
+        }
+
+        clearSelection();
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void clearSelection() {
+        for (int i = 0; i < getListView().getCount(); i++) {
+            getListView().setItemChecked(i, false);
         }
     }
 
@@ -72,6 +82,10 @@ public class IrcAccountListFragment extends SherlockListFragment {
     }
 
     public Account getSelectedAccount() {
+        if (getListView().getCheckedItemPosition() == ListView.INVALID_POSITION) {
+            return null;
+        }
+
         return mAdapter.getItem(getListView().getCheckedItemPosition());
     }
 }

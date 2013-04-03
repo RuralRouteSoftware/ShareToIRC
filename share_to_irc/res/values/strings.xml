@@ -19,5 +19,6 @@
     <string name="share_success">Successfully shared to IRC</string>
     <string name="sharing">Sharing&#8230;</string>
     <string name="add_account">Add account</string>
+    <string name="delete">Delete</string>
 
 </resources>
