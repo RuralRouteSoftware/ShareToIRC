@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="error_empty_server_name">Must enter a server name</string>
+    <string name="error_empty_host_address">Must enter an address</string>
+    <string name="error_empty_host_port">Must enter a port</string>
+    <string name="error_empty_nick">Must enter a nick</string>
+    <string name="error_invalid_channel_list">Must enter at least one channel</string>
+
+</resources>

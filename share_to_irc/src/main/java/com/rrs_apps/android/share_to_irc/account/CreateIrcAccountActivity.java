@@ -26,7 +26,7 @@ public class CreateIrcAccountActivity extends SherlockAccountAuthenticatorActivi
 
     @Override
     public void onSave(IrcAccountEditorFragment editIrcAccountFragment) {
-        if (!editFragment.dataIsValid())
+        if (!editFragment.validateData())
             return;
 
         // Prepare result bundle

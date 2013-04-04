@@ -138,12 +138,43 @@ public class IrcAccountEditorFragment extends SherlockFragment {
     }
 
     /**
-     * Checks the editor's data against basic account validity conditions
+     * Checks the editor's data against basic account validity conditions, and displays errors on invalid fields.
      * 
      * @return false if the data is definitely invalid; otherwise true
      */
-    public boolean dataIsValid() {
-        return !getServerName().isEmpty() && !getHostAddress().isEmpty() && !getHostPort().isEmpty()
-                && !getNick().isEmpty() && getChannelList().contains("#");
+    public boolean validateData() {
+        boolean isValid = true;
+
+        if (getServerName().isEmpty()) {
+            serverName.setError(getResources().getString(R.string.error_empty_server_name));
+
+            isValid = false;
+        }
+
+        if (getHostAddress().isEmpty()) {
+            hostAddress.setError(getResources().getString(R.string.error_empty_host_address));
+
+            isValid = false;
+        }
+
+        if (getHostPort().isEmpty()) {
+            hostPort.setError(getResources().getString(R.string.error_empty_host_port));
+
+            isValid = false;
+        }
+
+        if (getNick().isEmpty()) {
+            nick.setError(getResources().getString(R.string.error_empty_nick));
+
+            isValid = false;
+        }
+
+        if (getChannelList().length() < 2 || !getChannelList().contains("#")) {
+            channelList.setError(getResources().getString(R.string.error_invalid_channel_list));
+
+            isValid = false;
+        }
+
+        return isValid;
     }
 }
