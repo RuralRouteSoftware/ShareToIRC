@@ -10,8 +10,8 @@
 	<name>share-to-irc - Parent</name>
 
 	<modules>
-		<module>share_to_irc</module>
-		<module>share_to_irc-it</module>
+		<module>share-to-irc</module>
+		<module>share-to-irc-it</module>
 	</modules>
 
 	<properties>
