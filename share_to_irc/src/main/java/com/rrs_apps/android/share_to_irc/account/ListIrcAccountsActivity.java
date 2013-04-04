@@ -4,6 +4,9 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -135,7 +138,33 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
 
     @OptionsItem
     void deleteAccount() {
-        AccountManager.get(this).removeAccount(listFragment.getSelectedAccount(),
+        // Show a confirmation before deleting the selected account
+        createDeleteConfirmationDialog().show();
+    }
+
+    private AlertDialog createDeleteConfirmationDialog() {
+        return new AlertDialog.Builder(this)
+                .setTitle(R.string.delete_account)
+                .setIcon(android.R.drawable.ic_menu_delete)
+                .setNegativeButton(android.R.string.no, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(android.R.string.yes, new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteSelectedAccount();
+                    }
+                })
+                .setMessage(
+                        String.format(getResources().getString(R.string.delete_account_confirmation),
+                                listFragment.getSelectedAccount().toString())).create();
+    }
+
+    private void deleteSelectedAccount() {
+        AccountManager.get(ListIrcAccountsActivity.this).removeAccount(listFragment.getSelectedAccount(),
                 new AccountManagerCallback<Boolean>() {
                     @Override
                     public void run(AccountManagerFuture<Boolean> future) {
