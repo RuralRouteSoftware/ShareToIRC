@@ -29,7 +29,9 @@ public class EditIrcAccountActivity extends SherlockFragmentActivity implements 
 
     @Override
     public void onSave(IrcAccountEditorFragment editFragment) {
-        editFragment.saveAccount(account);
+        if (editFragment.dataIsValid()) {
+            editFragment.saveAccount(account);
+        }
 
         finish();
     }
