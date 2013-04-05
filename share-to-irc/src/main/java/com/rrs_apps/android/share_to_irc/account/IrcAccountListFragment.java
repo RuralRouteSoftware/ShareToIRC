@@ -63,15 +63,7 @@ public class IrcAccountListFragment extends SherlockListFragment {
             mAdapter.add(new IrcAccount(acct));
         }
 
-        clearSelection();
-
-        mAdapter.notifyDataSetChanged();
-    }
-
-    public void clearSelection() {
-        for (int i = 0; i < getListView().getCount(); i++) {
-            getListView().setItemChecked(i, false);
-        }
+        setListAdapter(mAdapter); // Simultaneously clears selection state and refreshes the ListView
     }
 
     @Override

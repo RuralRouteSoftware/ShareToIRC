@@ -40,7 +40,7 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
     private class AccountLongClickListener implements OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-            if (mActionMode == null && editFragment == null || !editFragment.isInLayout()) {
+            if (mActionMode == null && (editFragment == null || !editFragment.isInLayout())) {
                 listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
                 mActionMode = startActionMode(new ActionMode.Callback() {
@@ -55,9 +55,9 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
                     public void onDestroyActionMode(ActionMode mode) {
                         mActionMode = null;
 
-                        listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
-
                         listFragment.reloadAccounts();
+
+                        listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
                     }
 
                     @Override
