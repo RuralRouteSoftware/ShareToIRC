@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.googlecode.androidannotations.annotations.AfterInject;
 import com.googlecode.androidannotations.annotations.EFragment;
 
 /**
@@ -19,7 +20,21 @@ import com.googlecode.androidannotations.annotations.EFragment;
 @EFragment
 public class IrcAccountListFragment extends SherlockListFragment {
     public interface Listener {
+        /**
+         * Called when an account in the list is clicked
+         * 
+         * @param acct
+         *            The clicked account
+         */
         void accountClicked(Account acct);
+
+        /**
+         * Called when the fragment has finished resuming
+         * 
+         * @param listFragment
+         *            The resumed fragment
+         */
+        void onResume(IrcAccountListFragment listFragment);
     }
 
     /**
@@ -38,6 +53,13 @@ public class IrcAccountListFragment extends SherlockListFragment {
 
     private ArrayAdapter<Account> mAdapter;
     private Listener listener;
+    private SparseBooleanArray mCheckedItems;
+
+    @AfterInject
+    void setRetainInstance() {
+        // Retain this instance so things like selection state are remembered
+        setRetainInstance(true);
+    }
 
     @Override
     public void onStart() {
@@ -51,6 +73,30 @@ public class IrcAccountListFragment extends SherlockListFragment {
         }
 
         reloadAccounts();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mCheckedItems = getListView().getCheckedItemPositions();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Restore the selection state
+        if (mCheckedItems != null) {
+            for (int i = 0; i < mCheckedItems.size(); i++) {
+                getListView().setItemChecked(mCheckedItems.keyAt(i), true);
+            }
+        }
+
+        // Notify listener that this fragment has completed resuming
+        if (listener != null) {
+            listener.onResume(this);
+        }
     }
 
     public void reloadAccounts() {

@@ -262,4 +262,13 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
 
         return super.onPrepareOptionsMenu(menu);
     }
+
+    @Override
+    public void onResume(IrcAccountListFragment listFragment) {
+        if (listFragment.getSelectedAccount() != null) {
+            // Handle resuming with a selected account (display editor, etc.)
+            showEditor();
+            supportInvalidateOptionsMenu();
+        }
+    }
 }
