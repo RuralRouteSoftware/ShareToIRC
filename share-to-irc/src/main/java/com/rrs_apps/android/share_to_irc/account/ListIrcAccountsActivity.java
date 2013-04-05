@@ -202,6 +202,10 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
     @OptionsItem
     void addAccount() {
         startActivity(new Intent(this, CreateIrcAccountActivity_.class));
+
+        if (editFragment != null && editFragment.isInLayout()) {
+            hideEditor();
+        }
     }
 
     @OptionsItem
