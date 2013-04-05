@@ -190,6 +190,9 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
 
     @Override
     public void onSave(IrcAccountEditorFragment editFragment) {
+        if (!editFragment.validateData())
+            return;
+
         Account acct = listFragment.getSelectedAccount();
         editFragment.saveAccount(acct);
 
