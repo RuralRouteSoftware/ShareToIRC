@@ -21,5 +21,6 @@
     <string name="add_account">Add account</string>
     <string name="delete_account">Delete account</string>
     <string name="delete_account_confirmation">Delete account \'%s\'?</string>
+    <string name="select_accounts">Select account(s)</string>
 
 </resources>

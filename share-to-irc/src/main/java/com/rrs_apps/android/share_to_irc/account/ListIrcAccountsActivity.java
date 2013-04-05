@@ -10,12 +10,16 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.googlecode.androidannotations.annotations.AfterViews;
 import com.googlecode.androidannotations.annotations.EActivity;
 import com.googlecode.androidannotations.annotations.FragmentById;
@@ -30,9 +34,61 @@ import com.rrs_apps.android.share_to_irc.account.IrcAccountListFragment.Listener
  * ListIrcAccountsActivity displays a list of Share To IRC accounts and allows the user to edit and add accounts.
  */
 @EActivity(R.layout.list_irc_accounts_activity)
-@OptionsMenu(R.menu.list_irc_accounts_activity_menu)
+@OptionsMenu({ R.menu.list_irc_accounts_activity_menu, R.menu.delete_account })
 public class ListIrcAccountsActivity extends SherlockFragmentActivity implements Listener,
         com.rrs_apps.android.share_to_irc.account.IrcAccountEditorFragment.Listener {
+    private class AccountLongClickListener implements OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+            if (mActionMode == null && editFragment == null || !editFragment.isInLayout()) {
+                listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+                mActionMode = startActionMode(new ActionMode.Callback() {
+                    @Override
+                    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                        mode.setTitle(R.string.select_accounts);
+
+                        return true;
+                    }
+
+                    @Override
+                    public void onDestroyActionMode(ActionMode mode) {
+                        mActionMode = null;
+
+                        listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
+
+                        listFragment.reloadAccounts();
+                    }
+
+                    @Override
+                    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                        mode.getMenuInflater().inflate(R.menu.delete_account, menu);
+
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                        if (item.getItemId() == R.id.delete_account) {
+                            // Delete account
+                            for (Account acct : listFragment.getSelectedAccounts()) {
+                                deleteAccount(acct);
+                            }
+
+                            mode.finish();
+                        }
+
+                        return true;
+                    }
+                });
+
+                listFragment.getListView().setItemChecked(position, true);
+            }
+
+            return true;
+        }
+    }
+
     private static final int REQ_CODE_CREATE_ACCOUNT = 0;
 
     @FragmentById(R.id.irc_account_list_fragment)
@@ -43,6 +99,8 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
 
     @ViewById(R.id.no_account_selected)
     TextView noAccountSelectedText;
+
+    private ActionMode mActionMode;
 
     @Override
     protected void onResume() {
@@ -71,6 +129,8 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
         listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
 
         listFragment.setListener(this);
+
+        listFragment.getListView().setOnItemLongClickListener(new AccountLongClickListener());
 
         if (editFragment != null) {
             editFragment.setListener(this);
@@ -116,7 +176,7 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
 
             supportInvalidateOptionsMenu();
         }
-        else {
+        else if (mActionMode == null) {
             // Launch separate editor activity
             startActivity(new Intent(this, EditIrcAccountActivity_.class).putExtra(
                     IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC, acct));
@@ -155,7 +215,10 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
                 .setPositiveButton(android.R.string.yes, new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteSelectedAccount();
+                        deleteAccount(listFragment.getSelectedAccount());
+
+                        // Selected account has been deleted; hide the editor
+                        hideEditor();
                     }
                 })
                 .setMessage(
@@ -163,8 +226,8 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
                                 listFragment.getSelectedAccount().toString())).create();
     }
 
-    private void deleteSelectedAccount() {
-        AccountManager.get(ListIrcAccountsActivity.this).removeAccount(listFragment.getSelectedAccount(),
+    private void deleteAccount(Account acct) {
+        AccountManager.get(ListIrcAccountsActivity.this).removeAccount(acct,
                 new AccountManagerCallback<Boolean>() {
                     @Override
                     public void run(AccountManagerFuture<Boolean> future) {
@@ -173,9 +236,6 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
                             ;
 
                         listFragment.reloadAccounts();
-
-                        // Selected account has been deleted; hide the editor
-                        hideEditor();
                     }
                 }, null);
     }

@@ -1,7 +1,11 @@
 package com.rrs_apps.android.share_to_irc.account;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -87,5 +91,17 @@ public class IrcAccountListFragment extends SherlockListFragment {
         }
 
         return mAdapter.getItem(getListView().getCheckedItemPosition());
+    }
+
+    public List<Account> getSelectedAccounts() {
+        ArrayList<Account> selectedAccounts = new ArrayList<Account>();
+
+        SparseBooleanArray checkedItems = getListView().getCheckedItemPositions();
+
+        for (int i = 0; i < checkedItems.size(); i++) {
+            selectedAccounts.add(mAdapter.getItem(checkedItems.keyAt(i)));
+        }
+
+        return selectedAccounts;
     }
 }
