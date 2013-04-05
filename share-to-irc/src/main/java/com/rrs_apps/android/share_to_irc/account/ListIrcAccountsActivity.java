@@ -37,10 +37,14 @@ import com.rrs_apps.android.share_to_irc.account.IrcAccountListFragment.Listener
 @OptionsMenu({ R.menu.list_irc_accounts_activity_menu, R.menu.delete_account })
 public class ListIrcAccountsActivity extends SherlockFragmentActivity implements Listener,
         com.rrs_apps.android.share_to_irc.account.IrcAccountEditorFragment.Listener {
+    /**
+     * A listener for long-clicks on the account list. Starts an action mode if the account editor isn't visible.
+     */
     private class AccountLongClickListener implements OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
             if (mActionMode == null && (editFragment == null || !editFragment.isInLayout())) {
+                // Enable multi-select
                 listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
                 mActionMode = startActionMode(new ActionMode.Callback() {
@@ -57,6 +61,7 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
 
                         listFragment.reloadAccounts();
 
+                        // Disallow selection
                         listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_NONE);
                     }
 
@@ -176,7 +181,7 @@ public class ListIrcAccountsActivity extends SherlockFragmentActivity implements
 
             supportInvalidateOptionsMenu();
         }
-        else if (mActionMode == null) {
+        else if (mActionMode == null) { // The list will handle selection when an action mode is active
             // Launch separate editor activity
             startActivity(new Intent(this, EditIrcAccountActivity_.class).putExtra(
                     IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC, acct));
