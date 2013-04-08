@@ -4,7 +4,7 @@
 
 	<groupId>com.rrs-apps.android.share-to-irc</groupId>
 	<artifactId>share-to-irc-parent</artifactId>
-	<version>1.0</version>
+	<version>1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>share-to-irc - Parent</name>
 
