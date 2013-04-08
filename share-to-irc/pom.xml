@@ -128,6 +128,7 @@
 						<configuration>
 							<release>true</release>
 							<zipalign>
+								<skip>false</skip>
 								<verbose>true</verbose>
 								<inputApk>${project.build.directory}/${project.artifactId}-${project.version}.apk</inputApk>
 								<outputApk>${project.build.directory}/${project.artifactId}-${project.version}-signed-aligned.apk</outputApk>
