@@ -9,12 +9,9 @@ import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.gms.common.AccountPicker;
-import com.rrs_apps.android.share_to_irc.R;
 
 /**
  * IrcAccountHandler implements the necessary AbstractAccountAuthenticator methods for managing Share To IRC accounts.
@@ -116,16 +113,14 @@ public class IrcAccountHandler extends AbstractAccountAuthenticator {
                 null, null, null);
 
         if (ctx.getPackageManager().resolveActivity(intent, 0) == null) {
-            // User probably needs the Google Play Services library
-            Toast.makeText(ctx, R.string.google_play_services_error, Toast.LENGTH_LONG).show();
-
-            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.google.android.gms"));
-
-            ctx.startActivity(intent);
+            // User probably doesn't have Google Play Services on their device
+            // Show alternate account picker
+            intent = new Intent(ctx, IrcAccountPickerActivity_.class);
+            intent.putExtra(IrcAccountPickerActivity.EXTRA_SELECTED_ACCOUNT, selectedAccount);
+            intent.putExtra(IrcAccountPickerActivity.EXTRA_ALWAYS_SHOW, alwaysShow ? 1 : 0);
         }
-        else {
-            ctx.startActivityForResult(intent, requestCode);
-        }
+
+        ctx.startActivityForResult(intent, requestCode);
     }
 
     /**

@@ -22,6 +22,9 @@
             android:theme="@style/Theme.AppCompat"
             android:exported="true" />
         <activity
+            android:name=".account.IrcAccountPickerActivity_"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
             android:name=".account.EditIrcAccountActivity_"
             android:theme="@style/Theme.AppCompat" />
         <activity
@@ -44,6 +47,7 @@
                 <data android:mimeType="text/*" />
             </intent-filter>
         </activity>
+
 
         <service
             android:name=".account.IrcAccountHandlerService"
