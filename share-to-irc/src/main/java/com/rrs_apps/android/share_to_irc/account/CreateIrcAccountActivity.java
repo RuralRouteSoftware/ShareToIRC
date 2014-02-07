@@ -4,17 +4,18 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.os.Bundle;
 
-import com.googlecode.androidannotations.annotations.AfterViews;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.FragmentById;
-import com.rrs_apps.android.auth.SherlockAccountAuthenticatorActivity;
+import com.rrs_apps.android.auth.AccountAuthenticatorFragmentActivity;
 import com.rrs_apps.android.share_to_irc.R;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.FragmentById;
 
 /**
  * CreateIrcAccountActivity handles the creation of Share To IRC accounts.
  */
 @EActivity(R.layout.create_irc_account_activity)
-public class CreateIrcAccountActivity extends SherlockAccountAuthenticatorActivity implements
+public class CreateIrcAccountActivity extends AccountAuthenticatorFragmentActivity implements
         IrcAccountEditorFragment.Listener {
     @FragmentById(R.id.irc_account_editor_fragment)
     IrcAccountEditorFragment editFragment;

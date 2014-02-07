@@ -3,20 +3,21 @@ package com.rrs_apps.android.share_to_irc.account;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.googlecode.androidannotations.annotations.Click;
-import com.googlecode.androidannotations.annotations.EFragment;
-import com.googlecode.androidannotations.annotations.ViewById;
 import com.rrs_apps.android.share_to_irc.R;
+
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ViewById;
 
 /**
  * IrcAccountEditorFragment provides an interface for editing a Share To IRC account's data.
  */
 @EFragment(R.layout.irc_account_editor_fragment)
-public class IrcAccountEditorFragment extends SherlockFragment {
+public class IrcAccountEditorFragment extends Fragment {
     public interface Listener {
         void onSave(IrcAccountEditorFragment fragment);
     }
@@ -94,9 +95,8 @@ public class IrcAccountEditorFragment extends SherlockFragment {
 
     /**
      * Fills all editor fields with an account's data
-     * 
-     * @param acct
-     *            Data is loaded from this account
+     *
+     * @param acct Data is loaded from this account
      */
     public void loadAccount(Account acct) {
         if (serverName == null) {
@@ -117,9 +117,8 @@ public class IrcAccountEditorFragment extends SherlockFragment {
 
     /**
      * Saves all editor values as the account's data
-     * 
-     * @param acct
-     *            Data is saved to this Account
+     *
+     * @param acct Data is saved to this Account
      */
     public void saveAccount(Account acct) {
         mAccountManager.setUserData(acct, IrcAccountHandler.ACCOUNT_KEY_SERVER_NAME, serverName.getText()
@@ -139,7 +138,7 @@ public class IrcAccountEditorFragment extends SherlockFragment {
 
     /**
      * Checks the editor's data against basic account validity conditions, and displays errors on invalid fields.
-     * 
+     *
      * @return false if the data is definitely invalid; otherwise true
      */
     public boolean validateData() {

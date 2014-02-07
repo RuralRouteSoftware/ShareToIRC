@@ -1,38 +1,36 @@
 package com.rrs_apps.android.share_to_irc.account;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.support.v4.app.ListFragment;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.googlecode.androidannotations.annotations.AfterInject;
-import com.googlecode.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * IrcAccountListFragment displays a list of all Share To IRC accounts.
  */
 @EFragment
-public class IrcAccountListFragment extends SherlockListFragment {
+public class IrcAccountListFragment extends ListFragment {
     public interface Listener {
         /**
          * Called when an account in the list is clicked
-         * 
-         * @param acct
-         *            The clicked account
+         *
+         * @param acct The clicked account
          */
         void accountClicked(Account acct);
 
         /**
          * Called when the fragment has finished resuming
-         * 
-         * @param listFragment
-         *            The resumed fragment
+         *
+         * @param listFragment The resumed fragment
          */
         void onResume(IrcAccountListFragment listFragment);
     }

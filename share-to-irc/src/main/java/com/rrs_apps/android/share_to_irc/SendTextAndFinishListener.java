@@ -1,26 +1,30 @@
 package com.rrs_apps.android.share_to_irc;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.rrs_apps.java.jirclib.IRCConnection;
 import com.rrs_apps.java.jirclib.IRCEventListener;
 import com.rrs_apps.java.jirclib.IRCModeParser;
 import com.rrs_apps.java.jirclib.IRCUser;
 
-import android.app.Activity;
-import android.widget.Toast;
-
 /**
- * This IRCEventListener sends shared text to all configured IRC channels, then disconnects and finishes the activity.
+ * This IRCEventListener sends shared text to all configured IRC channels, then disconnects and finishes the context.
  */
 class SendTextAndFinishListener implements IRCEventListener {
-    private final Activity activity;
+    private final String TAG = getClass().getName();
+    private final Context context;
     private final String[] channels;
     private final IRCConnection conn;
     private String text;
     private String quitMessage;
+    private boolean errored;
+    private ICallback callback;
+    private boolean quitting;
 
-    SendTextAndFinishListener(Activity activity, String text, String[] channels, IRCConnection conn,
-            String quitMessage) {
-        this.activity = activity;
+    SendTextAndFinishListener(Context context, String text, String[] channels, IRCConnection conn,
+                              String quitMessage) {
+        this.context = context;
         this.channels = channels;
         this.conn = conn;
         this.text = text;
@@ -29,23 +33,25 @@ class SendTextAndFinishListener implements IRCEventListener {
 
     @Override
     public void onDisconnected() {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(activity, R.string.share_success, Toast.LENGTH_SHORT).show();
+        if (callback != null) {
+            if (errored && !quitting) {
+                callback.onError();
+            } else {
+                callback.onSuccess();
             }
-        });
-
-        // Finish the activity
-        activity.finish();
+        }
     }
 
     @Override
-    public void onError(String arg0) {
+    public void onError(String msg) {
+        Log.e(TAG, msg);
+
+        errored = true;
     }
 
     @Override
-    public void onError(int arg0, String arg1) {
+    public void onError(int errorNum, String msg) {
+        onError(msg);
     }
 
     @Override
@@ -96,10 +102,13 @@ class SendTextAndFinishListener implements IRCEventListener {
     public void onRegistered() {
         // Send text to all channels and disconnect
         for (String chan : channels) {
+            Log.d(TAG, "Sending to " + chan);
+
             conn.doJoin(chan);
             conn.doPrivmsg(chan, text);
         }
 
+        quitting = true;
         conn.doQuit(quitMessage);
     }
 
@@ -112,6 +121,23 @@ class SendTextAndFinishListener implements IRCEventListener {
     }
 
     @Override
-    public void unknown(String arg0, String arg1, String arg2, String arg3) {
+    public void unknown(String prefix, String command, String middle, String trailing) {
+        onError(trailing);
+    }
+
+    public void setCallback(ICallback callback) {
+        this.callback = callback;
+    }
+
+    public interface ICallback {
+        /**
+         * Called if text is successfully sent to the IRC server
+         */
+        public void onSuccess();
+
+        /**
+         * Called if there is an error sending text to the IRC server
+         */
+        public void onError();
     }
 }

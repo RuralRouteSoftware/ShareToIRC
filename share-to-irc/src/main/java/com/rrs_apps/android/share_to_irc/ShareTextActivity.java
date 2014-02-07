@@ -1,27 +1,26 @@
 package com.rrs_apps.android.share_to_irc;
 
-import java.io.IOException;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.googlecode.androidannotations.annotations.Background;
-import com.googlecode.androidannotations.annotations.EActivity;
-import com.googlecode.androidannotations.annotations.Extra;
-import com.googlecode.androidannotations.annotations.OnActivityResult;
 import com.rrs_apps.android.share_to_irc.account.IrcAccountHandler;
-import com.rrs_apps.java.jirclib.IRCConnection;
-import com.rrs_apps.java.jirclib.ssl.SSLIRCConnection;
+
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OnActivityResult;
+import org.parceler.Parcels;
 
 /**
  * ShareTextActivity receives text via an intent and shares it to a selected IRC account.
  */
 @EActivity(R.layout.share_text_activity)
-public class ShareTextActivity extends SherlockFragmentActivity {
+public class ShareTextActivity extends FragmentActivity {
     private static final int REQ_CODE_PICK_ACCOUNT = 0;
+    private final String TAG = getClass().getName();
 
     @Extra(Intent.EXTRA_SUBJECT)
     String subject;
@@ -37,11 +36,10 @@ public class ShareTextActivity extends SherlockFragmentActivity {
             Toast.makeText(this, R.string.no_text_to_share, Toast.LENGTH_LONG).show();
 
             finish();
-        }
-        else {
+        } else {
             // Determine destination account
             IrcAccountHandler.launchAccountPicker(this, REQ_CODE_PICK_ACCOUNT, null, false,
-                    new String[] { IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC });
+                    new String[]{IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC});
         }
     }
 
@@ -72,36 +70,24 @@ public class ShareTextActivity extends SherlockFragmentActivity {
                 text = subject + ": " + text;
             }
 
-            sendTextToServer(text, address, port, nick, useSsl, password, channels);
-        }
-        else {
+            queueMessageWithService(text, address, port, nick, useSsl, password, channels);
+        } else {
             finish();
         }
     }
 
-    @Background
-    void sendTextToServer(String text, String address, int port, String nick, boolean useSsl,
-            String password, final String[] channels) {
-        // Create connection
-        final IRCConnection conn;
-        if (useSsl) {
-            conn = new SSLIRCConnection(address, port, port, password, nick, nick, nick);
-        }
-        else {
-            conn = new IRCConnection(address, port, port, password, nick, nick, nick);
-        }
+    private void queueMessageWithService(String text, String address, int port, String nick, boolean useSsl, String password, String[] channels) {
+        Log.d(TAG, "Queueing text with service");
 
-        // Add listener that sends the text and finishes the activity upon connecting
-        conn.addIRCEventListener(new SendTextAndFinishListener(this, text, channels, conn, getResources()
-                .getString(R.string.quit_message)));
+        Intent sendTextIntent = new Intent(this, ShareTextService_.class);
 
-        try {
-            conn.connect();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
+        IRCMessage message = new IRCMessage(text, address, port, nick, password, channels);
+        message.setUsesSsl(true);
 
-            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
-        }
+        sendTextIntent.putExtra(ShareTextService.EXTRA_IRC_MESSAGE, Parcels.wrap(message));
+
+        startService(sendTextIntent);
+
+        finish();
     }
 }

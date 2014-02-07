@@ -1,0 +1,4 @@
+rootProject.name = 'share-to-irc-parent'
+include ':share-to-irc'
+
+project(':share-to-irc').projectDir = "$rootDir/share-to-irc" as File

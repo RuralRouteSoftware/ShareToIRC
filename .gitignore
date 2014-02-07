@@ -1,4 +1,5 @@
-target/
-.metadata/
-bin/
-gen/
+.gradle/
+build/
+.idea/
+*.iml
+local.properties
