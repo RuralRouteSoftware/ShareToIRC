@@ -8,9 +8,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.ActionMode;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,8 +35,8 @@ import org.androidannotations.annotations.ViewById;
  * ListIrcAccountsActivity displays a list of Share To IRC accounts and allows the user to edit and add accounts.
  */
 @EActivity(R.layout.list_irc_accounts_activity)
-@OptionsMenu({ R.menu.list_irc_accounts_activity_menu, R.menu.delete_account })
-public class ListIrcAccountsActivity extends FragmentActivity implements Listener,
+@OptionsMenu({R.menu.list_irc_accounts_activity_menu, R.menu.delete_account})
+public class ListIrcAccountsActivity extends ActionBarActivity implements Listener,
         com.rrs_apps.android.share_to_irc.account.IrcAccountEditorFragment.Listener {
     /**
      * A listener for long-clicks on the account list. Starts an action mode if the account editor isn't visible.
@@ -48,7 +48,7 @@ public class ListIrcAccountsActivity extends FragmentActivity implements Listene
                 // Enable multi-select
                 listFragment.getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-                mActionMode = startActionMode(new ActionMode.Callback() {
+                mActionMode = startSupportActionMode(new ActionMode.Callback() {
                     @Override
                     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                         mode.setTitle(R.string.select_accounts);
@@ -181,8 +181,7 @@ public class ListIrcAccountsActivity extends FragmentActivity implements Listene
             showEditor();
 
             supportInvalidateOptionsMenu();
-        }
-        else if (mActionMode == null) { // The list will handle selection when an action mode is active
+        } else if (mActionMode == null) { // The list will handle selection when an action mode is active
             // Launch separate editor activity
             startActivity(new Intent(this, EditIrcAccountActivity_.class).putExtra(
                     IrcAccountHandler.ACCOUNT_TYPE_SHARE_TO_IRC, acct));
@@ -259,8 +258,7 @@ public class ListIrcAccountsActivity extends FragmentActivity implements Listene
         if (listFragment != null && listFragment.isInLayout() && listFragment.getSelectedAccount() != null) {
             menu.findItem(R.id.delete_account).setVisible(true);
             menu.findItem(R.id.delete_account).setEnabled(true);
-        }
-        else {
+        } else {
             menu.findItem(R.id.delete_account).setVisible(false);
             menu.findItem(R.id.delete_account).setEnabled(false);
         }

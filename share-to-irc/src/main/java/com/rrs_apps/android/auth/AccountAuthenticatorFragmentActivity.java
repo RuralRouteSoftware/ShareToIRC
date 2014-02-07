@@ -3,13 +3,13 @@ package com.rrs_apps.android.auth;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * AccountAuthenticatorFragmentActivity provides the same functionality as the stock Android class, while also
  * supporting Fragments within subclasses.
  */
-public class AccountAuthenticatorFragmentActivity extends FragmentActivity {
+public class AccountAuthenticatorFragmentActivity extends ActionBarActivity {
     private AccountAuthenticatorResponse mAccountAuthenticatorResponse = null;
     private Bundle mResultBundle = null;
 

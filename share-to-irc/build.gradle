@@ -26,6 +26,7 @@ apt {
 
 dependencies {
     compile 'com.android.support:support-v4:19.0.+'
+    compile 'com.android.support:appcompat-v7:19.0.+'
     compile 'com.google.android.gms:play-services:4.1.+'
     compile 'com.rrs-apps.java.jirclib:jirclib:1.0'
     apt "org.androidannotations:androidannotations:${androidAnnotationsVersion}"

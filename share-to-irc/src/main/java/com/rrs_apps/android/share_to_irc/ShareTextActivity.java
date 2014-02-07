@@ -3,7 +3,7 @@ package com.rrs_apps.android.share_to_irc;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,7 +18,7 @@ import org.parceler.Parcels;
  * ShareTextActivity receives text via an intent and shares it to a selected IRC account.
  */
 @EActivity(R.layout.share_text_activity)
-public class ShareTextActivity extends FragmentActivity {
+public class ShareTextActivity extends ActionBarActivity {
     private static final int REQ_CODE_PICK_ACCOUNT = 0;
     private final String TAG = getClass().getName();
 

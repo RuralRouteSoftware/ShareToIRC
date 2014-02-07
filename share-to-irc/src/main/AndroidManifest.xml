@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rrs_apps.android.share_to_irc"
     android:versionCode="2"
-    android:versionName="1.1" >
+    android:versionName="1.1">
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -16,19 +16,26 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon"
-        android:label="@string/app_name" >
+        android:label="@string/app_name">
         <activity
             android:name=".account.CreateIrcAccountActivity_"
+            android:theme="@style/Theme.AppCompat"
             android:exported="true" />
-        <activity android:name=".account.EditIrcAccountActivity_" />
-        <activity android:name=".account.ListIrcAccountsActivity_" >
+        <activity
+            android:name=".account.EditIrcAccountActivity_"
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".account.ListIrcAccountsActivity_"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShareTextActivity_" >
+        <activity
+            android:name=".ShareTextActivity_"
+            android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -40,7 +47,7 @@
 
         <service
             android:name=".account.IrcAccountHandlerService"
-            android:permission="android.permission.AUTHENTICATE_ACCOUNTS" >
+            android:permission="android.permission.AUTHENTICATE_ACCOUNTS">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
