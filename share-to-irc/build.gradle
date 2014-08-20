@@ -1,24 +1,25 @@
 description = 'Share To IRC'
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.0"
-
+    buildToolsVersion '19.1.0'
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 19
     }
-
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
-
     lintOptions {
         abortOnError false
+    }
+    productFlavors {
+    }
+    buildTypes {
     }
 }
 
