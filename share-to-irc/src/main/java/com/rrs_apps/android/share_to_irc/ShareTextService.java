@@ -67,9 +67,9 @@ public class ShareTextService extends Service implements SendTextAndFinishListen
 
             buildAndDisplayNotification(R.string.sharing, true);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.i(TAG, "Error connecting to IRC", e);
 
-            Toast.makeText(this, R.string.error_connecting, Toast.LENGTH_LONG).show();
+            onError(R.string.error_connecting, e);
         }
     }
 
@@ -102,6 +102,25 @@ public class ShareTextService extends Service implements SendTextAndFinishListen
     public void onError() {
         Log.e(TAG, "Error sharing to IRC");
 
-        buildAndDisplayNotification(R.string.share_failure, false);
+        onError(R.string.share_failure);
+    }
+
+    private void onError(int errorMessageId) {
+        onError(errorMessageId, null);
+    }
+
+    /**
+     * Displays a notification with an error message
+     *
+     * @param errorMessageId The resource ID of the error message to display in the notification
+     * @param optionalException If not null, the exception that caused the error
+     */
+    @UiThread
+    void onError(int errorMessageId, Exception optionalException) {
+        if (optionalException != null) {
+            optionalException.printStackTrace();
+        }
+
+        buildAndDisplayNotification(errorMessageId, false);
     }
 }
