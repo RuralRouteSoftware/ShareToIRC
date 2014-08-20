@@ -66,7 +66,10 @@ public class ShareTextActivity extends ActionBarActivity {
             String[] channels = channelList.split(" ");
 
             // Prepend subject if it was supplied
-            if (subject != null && !subject.isEmpty()) {
+            if (subject != null && !subject.trim().isEmpty()) {
+                // Some apps duplicate the subject in the actual text; attempt to tidy up the output by removing the duplicate text
+                text = text.replace(subject, "").trim();
+
                 text = subject + ": " + text;
             }
 
