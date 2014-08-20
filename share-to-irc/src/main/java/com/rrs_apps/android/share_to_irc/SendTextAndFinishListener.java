@@ -13,7 +13,6 @@ import com.rrs_apps.java.jirclib.IRCUser;
  */
 class SendTextAndFinishListener implements IRCEventListener {
     private final String TAG = getClass().getName();
-    private final Context context;
     private final String[] channels;
     private final IRCConnection conn;
     private final String[] texts;
@@ -25,15 +24,12 @@ class SendTextAndFinishListener implements IRCEventListener {
     /**
      * Constructs the text sender
      *
-     * @param context
      * @param text The text to send. Embedding newline characters will cause the text to be sent as multiple messages.
      * @param channels
      * @param conn
      * @param quitMessage
      */
-    SendTextAndFinishListener(Context context, String text, String[] channels, IRCConnection conn,
-                              String quitMessage) {
-        this.context = context;
+    SendTextAndFinishListener(String text, String[] channels, IRCConnection conn, String quitMessage) {
         this.channels = channels;
         this.conn = conn;
         this.texts = text.replace("\r", "").split("\n");

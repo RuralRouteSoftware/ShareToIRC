@@ -2,6 +2,7 @@ package com.rrs_apps.android.share_to_irc;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -17,8 +18,8 @@ import org.parceler.Parcels;
 /**
  * ShareTextActivity receives text via an intent and shares it to a selected IRC account.
  */
-@EActivity(R.layout.share_text_activity)
-public class ShareTextActivity extends ActionBarActivity {
+@EActivity
+public class ShareTextActivity extends Activity {
     private static final int REQ_CODE_PICK_ACCOUNT = 0;
     private final String TAG = getClass().getName();
 
@@ -64,6 +65,11 @@ public class ShareTextActivity extends ActionBarActivity {
             String channelList = AccountManager.get(this).getUserData(acct,
                     IrcAccountHandler.ACCOUNT_KEY_CHANNEL_LIST);
             String[] channels = channelList.split(" ");
+
+            // Notify user that sharing is occurring
+            String serverName = AccountManager.get(this).getUserData(acct, IrcAccountHandler.ACCOUNT_KEY_SERVER_NAME);
+            String sharingText = getResources().getText(R.string.sharing_to_x).toString();
+            Toast.makeText(this, String.format(sharingText, serverName), Toast.LENGTH_SHORT).show();
 
             // Prepend subject if it was supplied
             if (subject != null && !subject.trim().isEmpty()) {

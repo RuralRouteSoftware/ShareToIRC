@@ -18,6 +18,7 @@
     <string name="quit_message">Brought to you by Share To IRC</string>
     <string name="share_success">Successfully shared to IRC</string>
     <string name="sharing">Sharing&#8230;</string>
+    <string name="sharing_to_x">Sharing to %s&#8230;</string>
     <string name="add_account">Add account</string>
     <string name="delete_account">Delete account</string>
     <string name="delete_account_confirmation">Delete account \'%s\'?</string>

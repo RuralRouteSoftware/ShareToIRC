@@ -56,7 +56,7 @@ public class ShareTextService extends Service implements SendTextAndFinishListen
         }
 
         // Add listener that sends the text and finishes the activity upon connecting
-        SendTextAndFinishListener ircListener = new SendTextAndFinishListener(this, text, channels, conn, getResources()
+        SendTextAndFinishListener ircListener = new SendTextAndFinishListener(text, channels, conn, getResources()
                 .getString(R.string.quit_message));
         ircListener.setCallback(this);
 
