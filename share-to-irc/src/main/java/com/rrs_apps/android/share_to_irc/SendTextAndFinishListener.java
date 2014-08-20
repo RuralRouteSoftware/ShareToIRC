@@ -16,18 +16,27 @@ class SendTextAndFinishListener implements IRCEventListener {
     private final Context context;
     private final String[] channels;
     private final IRCConnection conn;
-    private String text;
+    private final String[] texts;
     private String quitMessage;
     private boolean errored;
     private ICallback callback;
     private boolean quitting;
 
+    /**
+     * Constructs the text sender
+     *
+     * @param context
+     * @param text The text to send. Embedding newline characters will cause the text to be sent as multiple messages.
+     * @param channels
+     * @param conn
+     * @param quitMessage
+     */
     SendTextAndFinishListener(Context context, String text, String[] channels, IRCConnection conn,
                               String quitMessage) {
         this.context = context;
         this.channels = channels;
         this.conn = conn;
-        this.text = text;
+        this.texts = text.replace("\r", "").split("\n");
         this.quitMessage = quitMessage;
     }
 
@@ -105,7 +114,10 @@ class SendTextAndFinishListener implements IRCEventListener {
             Log.d(TAG, "Sending to " + chan);
 
             conn.doJoin(chan);
-            conn.doPrivmsg(chan, text);
+
+            for (String text : texts) {
+                conn.doPrivmsg(chan, text);
+            }
         }
 
         quitting = true;
