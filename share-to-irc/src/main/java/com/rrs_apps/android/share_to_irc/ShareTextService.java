@@ -81,6 +81,8 @@ public class ShareTextService extends Service implements SendTextAndFinishListen
                 .setContentText(getResources().getString(messageId))
                 .setContentIntent(emptyIntent);
 
+        builder.setAutoCancel(true);
+
         if (showProgress) {
             builder.setProgress(0, 0, true);
         }
